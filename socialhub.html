@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SocialHub - Complete Social Media</title>
+    <style>
+        *{margin:0;padding:0;box-sizing:border-box}body{font-family:system-ui,-apple-system,sans-serif;background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);min-height:100vh;color:#333}.container{max-width:1200px;margin:0 auto;padding:20px}.auth-container{max-width:400px;margin:50px auto;background:#fff;padding:40px;border-radius:20px;box-shadow:0 20px 40px rgba(0,0,0,.1)}h2{text-align:center;margin-bottom:30px;color:#333}.form-group{margin-bottom:20px}input{width:100%;padding:15px;border:2px solid #e1e5e9;border-radius:10px;font-size:16px;transition:border-color .3s}input:focus{outline:none;border-color:#667eea}.btn{width:100%;padding:15px;background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);color:#fff;border:none;border-radius:10px;font-size:16px;font-weight:700;cursor:pointer;transition:transform .2s}.btn:hover{transform:translateY(-2px)}.auth-toggle{text-align:center;margin-top:20px;color:#666}a{color:#667eea;text-decoration:none;font-weight:700}.app{display:none}.app.show{display:block}.navbar{background:#fff;padding:20px 40px;box-shadow:0 2px 10px rgba(0,0,0,.1);display:flex;justify-content:space-between;align-items:center;border-radius:0 0 20px 20px}.navbar h1{color:#333;font-size:24px}.user-info{display:flex;align-items:center;gap:15px}.avatar{width:40px;height:40px;border-radius:50%;background:#667eea;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700}.main-content{display:grid;grid-template-columns:1fr 350px;gap:30px;margin-top:30px}.feed{background:#fff;border-radius:20px;padding:30px;box-shadow:0 10px 30px rgba(0,0,0,.1)}.create-post{border:2px dashed #e1e5e9;border-radius:15px;padding:25px;margin-bottom:30px;text-align:center}textarea{width:100%;min-height:100px;padding:20px;border:2px solid #e1e5e9;border-radius:15px;font-family:inherit;font-size:16px;resize:vertical;margin-bottom:15px}textarea:focus{outline:none;border-color:#667eea}.post{background:#f8f9fa;border-radius:15px;padding:25px;margin-bottom:25px;border-left:4px solid #667eea}.post-header{display:flex;align-items:center;gap:15px;margin-bottom:15px}.post-avatar{width:45px;height:45px;border-radius:50%;background:#667eea;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;font-size:18px}.post-content{margin-bottom:20px;line-height:1.6}.post-actions{display:flex;gap:20px;margin-bottom:20px;padding-top:15px;border-top:1px solid #e1e5e9}.post-actions button{background:none;border:none;font-size:18px;cursor:pointer;display:flex;align-items:center;gap:5px;padding:8px 12px;border-radius:20px;transition:all .3s}.post-actions button:hover{background:#e1e5e9}.liked{background:#ff6b6b!important;color:#fff!important}.comment-form{display:flex;gap:10px}.comment-form input{flex:1;padding:12px;border:2px solid #e1e5e9;border-radius:25px;font-size:14px}.comment-form button{padding:12px 20px;background:#667eea;color:#fff;border:none;border-radius:25px;cursor:pointer}.comment{padding:10px 0;border-bottom:1px solid #e1e5e9;font-size:14px}.sidebar{display:flex;flex-direction:column;gap:20px}.profile-card{background:#fff;padding:30px;border-radius:20px;box-shadow:0 10px 30px rgba(0,0,0,.1);text-align:center}.profile-card .avatar{width:80px;height:80px;font-size:24px;margin:0 auto 20px}.profile-stats{display:flex;justify-content:space-around;margin:20px 0;padding:20px 0;border-top:1px solid #e1e5e9;border-bottom:1px solid #e1e5e9}.stat{text-align:center}.stat-number{font-size:24px;font-weight:700;color:#667eea}.hidden{display:none!important}@media(max-width:768px){.main-content{grid-template-columns:1fr}.navbar{padding:15px 20px}}
+    </style>
+</head>
+<body>
+    <div id="authContainer" class="auth-container">
+        <h2 id="authTitle">Login to SocialHub</h2>
+        <form id="authForm">
+            <div class="form-group"><input type="text" id="username" placeholder="Username"></div>
+            <div class="form-group"><input type="email" id="email" placeholder="Email" required></div>
+            <div class="form-group"><input type="password" id="password" placeholder="Password" required></div>
+            <button type="submit" class="btn">Login</button>
+        </form>
+        <div class="auth-toggle">Don't have an account? <a href="#" id="toggleAuth">Register</a></div>
+    </div>
+
+    <div id="app" class="app">
+        <div class="navbar">
+            <h1>🏠 SocialHub</h1>
+            <div class="user-info">
+                <span id="currentUser"></span>
+                <div class="avatar" id="userAvatar"></div>
+                <button class="btn" onclick="logout()">Logout</button>
+            </div>
+        </div>
+        <div class="container">
+            <div class="main-content">
+                <div class="feed">
+                    <div class="create-post">
+                        <textarea id="postContent" placeholder="What's on your mind?"></textarea>
+                        <button class="btn" onclick="createPost()">Post</button>
+                    </div>
+                    <div id="postsFeed"></div>
+                </div>
+                <div class="sidebar">
+                    <div class="profile-card">
+                        <div class="avatar" id="sidebarAvatar"></div>
+                        <h3 id="sidebarUsername"></h3>
+                        <p id="sidebarBio">Your bio goes here...</p>
+                        <div class="profile-stats">
+                            <div class="stat"><div class="stat-number" id="postsCount">0</div><div>Posts</div></div>
+                            <div class="stat"><div class="stat-number" id="followersCount">0</div><div>Followers</div></div>
+                            <div class="stat"><div class="stat-number" id="followingCount">0</div><div>Following</div></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        class SocialDB{constructor(){this.db=JSON.parse(localStorage.getItem('socialDB'))||{users:{},posts:[],nextPostId:1,nextUserId:1};this.save()}save(){localStorage.setItem('socialDB',JSON.stringify(this.db))}createUser(u,e,p){const i=this.db.nextUserId++;this.db.users[i]={id:i,username:u,email:e,password:btoa(p),fullName:u,bio:'',followers:[],following:[],posts:[]};this.save();return i}getUserByEmail(e){return Object.values(this.db.users).find(u=>u.email===e)}getUserByUsername(u){return Object.values(this.db.users).find(u=>u.username===u)}getUserById(i){return this.db.users[i]}createPost(u,c){const p=this.db.nextPostId++;const o={id:p,userId:u,content:c,likes:[],comments:[],createdAt:new Date().toISOString()};this.db.posts.unshift(o);this.db.users[u].posts.unshift(p);this.save();return o}getPosts(){return this.db.posts.map(p=>({...p,user:this.getUserById(p.userId)})).sort((a,b)=>new Date(b.createdAt)-new Date(a.createdAt))}toggleLike(p,u){const o=this.db.posts.find(p=>p.id===p);const i=o.likes.indexOf(u);i>-1?o.likes.splice(i,1):o.likes.push(u);this.save()}addComment(p,u,c){const o=this.db.posts.find(p=>p.id===p);o.comments.push({userId:u,content:c,createdAt:new Date().toISOString()});this.save()}toggleFollow(f,t){const r=this.getUserById(f);const w=this.getUserById(t);const a=r.following.indexOf(t);const n=w.followers.indexOf(f);a>-1?(r.following.splice(a,1),w.followers.splice(n,1)):(r.following.push(t),w.followers.push(f));this.save()}getUserPosts(u){const r=this.getUserByUsername(u);if(!r)return[];return this.db.posts.filter(p=>r.posts.includes(p.id)).map(p=>({...p,user:r})).sort((a,b)=>new Date(b.createdAt)-new Date(a.createdAt))}}const db=new SocialDB();let currentUser=null;let isLogin=true;const authContainer=document.getElementById('authContainer');const app=document.getElementById('app');const authForm=document.getElementById('authForm');const authTitle=document.getElementById('authTitle');const toggleAuth=document.getElementById('toggleAuth');function init(){const u=localStorage.getItem('currentUser');if(u){currentUser=JSON.parse(u);showApp();render()}else{showAuth()}}authForm.addEventListener('submit',e=>{e.preventDefault();const u=document.getElementById('username').value;const n=document.getElementById('email').value;const s=document.getElementById('password').value;if(isLogin){login(n,s)}else{register(u,n,s)}});toggleAuth.addEventListener('click',e=>{e.preventDefault();isLogin=!isLogin;authTitle.textContent=isLogin?'Login to SocialHub':'Join SocialHub';authForm.querySelector('button[type="submit"]').textContent=isLogin?'Login':'Register';toggleAuth.textContent=isLogin?'Register':'Login here';document.getElementById('username').classList.toggle('hidden",!isLogin)});function login(e,p){const u=db.getUserByEmail(e);if(u&&u.password===btoa(p)){currentUser=u;localStorage.setItem('currentUser',JSON.stringify(u));showApp();render()}else{alert('❌ Invalid credentials!')}}function register(u,e,p){if(db.getUserByEmail(e)){alert('❌ Email already exists!');return}if(db.getUserByUsername(u)){alert('❌ Username already exists!');return}const n=db.createUser(u,e,p);currentUser=db.getUserById(n);localStorage.setItem('currentUser',JSON.stringify(currentUser));showApp();render()}function logout(){localStorage.removeItem('currentUser');currentUser=null;showAuth()}function showApp(){authContainer.classList.add('hidden');app.classList.remove('hidden');app.classList.add('show')}function showAuth(){app.classList.add('hidden');app.classList.remove('show');authContainer.classList.remove('hidden')}function render(){renderNavbar();renderSidebar();renderPosts()}function renderNavbar(){document.getElementById('currentUser').textContent=currentUser.username;document.getElementById('userAvatar').textContent=currentUser.username[0].toUpperCase();document.getElementById('sidebarAvatar').textContent=currentUser.username[0].toUpperCase()}function renderSidebar(){document.getElementById('sidebarUsername').textContent=currentUser.username;document.getElementById('sidebarBio').textContent=currentUser.bio||'Your bio goes here...';document.getElementById('postsCount').textContent=currentUser.posts.length;document.getElementById('followersCount').textContent=currentUser.followers.length;document.getElementById('followingCount').textContent=currentUser.following.length}function renderPosts(){const p=db.getPosts();const f=document.getElementById('postsFeed');f.innerHTML=p.map(e=>`
+            <div class="post">
+                <div class="post-header">
+                    <div class="post-avatar">${e.user.username[0].toUpperCase()}</div>
+                    <h3>${e.user.username}</h3>
+                </div>
+                <div class="post-content">${e.content}</div>
+                <div class="post-actions">
+                    <button onclick="toggleLike(${e.id})" class="${e.likes.includes(currentUser.id)?'liked':''}">
+                        ${e.likes.includes(currentUser.id)?'❤️':'🤍'} ${e.likes.length}
+                    </button>
+                    <span>${e.comments.length} comments</span>
+                </div>
+                <div class="comments">
+                    ${e.comments.map(c=>{const u=db.getUserById(c.userId);return`<div class="comment"><strong>${u?u.username:'User'}:</strong> ${c.content}</div>`}).join('')}
+                    <form class="comment-form" onsubmit="addComment(event,${e.id})">
+                        <input name="comment" placeholder="Add comment..." required>
+                        <button type="submit">Post</button>
+                    </form>
+                </div>
+            </div>
+        `).join('')}function createPost(){const p=document.getElementById('postContent').value.trim();if(!p){alert('❌ Write something!');return}db.createPost(currentUser.id,p);document.getElementById('postContent').value='';renderPosts()}function toggleLike(p){db.toggleLike(p,currentUser.id);renderPosts()}function addComment(e,p){e.preventDefault();const c=e.target.comment.value.trim();if(!c)return;db.addComment(p,currentUser.id,c);e.target.reset();renderPosts()}init();
+    </script>
+</body>
+</html>
